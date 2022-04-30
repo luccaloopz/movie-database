@@ -33,21 +33,21 @@ app.get("/api/movies", (req, res) => {
 app.post("/api/add-movie", (req, res) => {
     db.query("Insert into movies (movie_name) values (?)", req.body.movieName, (err, data) => {
         res.json(data);
-    })
+    });
 });
 
 // route successfully updates a movie when tested using Insomnia
 app.put("/api/update-review", (req, res) => {
-  res.json("oink");
+    db.query("insert into reviews (movie_id, review) values (?, ?)", [req.body.movie_id, req.body.review], (err, data) => {
+        res.json(data);
+    });
 });
 
 // route deletes a route when tested using Insomnia
-app.delete("/api/movies/:id", (req, res) => {
-  res.json("moo");
-});
-
-app.post("/api/movies", (req, res) => {
-  res.json("chirp");
+app.delete("/api/movie/:id", (req, res) => {
+    db.query("delete from movies where id = ?", req.body.id, (err, data) => {
+        res.json(data);
+    });
 });
 
 app.listen(PORT, () => {
